@@ -36,6 +36,12 @@ sequelize.sync().success( function () {
             } ).success( function () {
                 console.log( "Base de datos inicializada" );
             } );
+            Quiz.create( {
+                pregunta: "Capital de Portugal",
+                respuesta: "Lisboa"
+            } ).success( function () {
+                console.log( "Base de datos inicializada" );
+            } );
         }
     } );
 } );
