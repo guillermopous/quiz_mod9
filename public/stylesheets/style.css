@@ -17,9 +17,9 @@ body {
     color: black;
 }
 
-section > div {
+/*section > div {
     padding: 20px;
-}
+}*/
 
 header, nav, section {
     background: #eee;
