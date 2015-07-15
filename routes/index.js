@@ -15,8 +15,12 @@ router.get( '/author', function ( req, res ) {
     } );
 } );
 
-router.get( "/quizes", quizController.index);
-router.get( "/quizes/:quizId(\\d+)", quizController.show);
+//Autoload
+router.param( "quizId", quizController.load );
+
+//Rutas
+router.get( "/quizes", quizController.index );
+router.get( "/quizes/:quizId(\\d+)", quizController.show );
 router.get( "/quizes/:quizId(\\d+)/answer", quizController.answer );
 
 module.exports = router;
