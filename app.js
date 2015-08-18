@@ -26,7 +26,33 @@ app.use( session() );
 app.use( methodOverride( "_method" ) );
 app.use( express.static( path.join( __dirname, 'public' ) ) );
 
+//Control auto-logut 
 app.use( function ( req, res, next ) {
+    // si no existe lo inicializa
+    if ( !req.session.lastAccess ) {
+        req.session.lastAccess = new Date();
+    }
+    var ahora = new Date();
+    var antes = new Date( req.session.lastAccess );
+
+    console.log( "ANTES: " + antes );
+    console.log( "AHORA: " + ahora );
+    if ( req.session.user ) {
+        console.log( "DIF: " + ((+ahora - antes) / 60000) + " mins." );
+        if ( +antes + 2 * 60 * 1000 < +ahora ) {
+            delete req.session.user;
+            console.log( "Borrando session" );
+        }
+    }
+    req.session.lastAccess = ahora;
+    next();
+} );
+
+app.use( function ( req, res, next ) {
+    // si no existe lo inicializa
+    if ( !req.session.redir ) {
+        req.session.redir = '/';
+    }
     if ( !req.path.match( /\/login|\/logout/ ) ) {
         req.session.redir = req.path;
     }
