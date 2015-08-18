@@ -1,0 +1,10 @@
+<div style="text-align: left; padding-left: 40px;">
+    <h2>Estadísticas</h2><br>
+    <ul>
+        <li><span>Número total de preguntas:</span> <%= stat.total_quizes %></li>
+        <li><span>Número total de comentarios:</span> <%= stat.total_comments %></li>
+        <li><span>Número medio de comentarios por pregunta:</span> <%= Number(stat.avg_comments).toFixed(2) %></li>
+        <li><span>Número de preguntas sin comentarios:</span> <%= stat.total_with_comments %></li>
+        <li><span>Número de preguntas con comentarios:</span> <%= stat.total_without_comments %></li>
+    </ul>
+</div>

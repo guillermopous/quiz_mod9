@@ -26,6 +26,43 @@ exports.index = function ( req, res ) {
     } );
 }
 
+exports.statistics = function ( req, res ) {
+    /*
+     models.Quiz.count( { } ).then( function ( c ) {
+     console.log( "Q:" + c );
+     } );
+     models.Comment.count( { } ).then( function ( c ) {
+     console.log( "C:" + c );
+     } );
+     models.Quiz.count( {
+     include: [ { model: models.Comment, required: true } ]
+     } ).then( function ( c ) {
+     console.log( "QwC:" + c );
+     } );
+     */
+    var stat = {
+        total_quizes: 0,
+        total_comments: 0,
+        total_with_comments: 0,
+        total_without_comments: 0,
+        avg_comments: 0
+    };
+    models.Quiz.findAll( {
+        include: [ { model: models.Comment } ]
+    } ).then( function ( quizes ) {
+        for ( var n = 0; n < quizes.length; n++ ) {
+            stat.total_quizes++;
+            stat.total_comments += quizes[n].Comments.length;
+            if ( quizes[n].Comments.length > 0 ) stat.total_with_comments++;
+            else stat.total_without_comments++;
+        }
+        stat.avg_comments = stat.total_comments / stat.total_quizes;
+        res.render( 'quizes/statistics', { stat: stat, errors: [ ] } );
+    } ).catch( function ( error ) {
+        next( error );
+    } );
+}
+
 exports.show = function ( req, res ) {
     res.render( 'quizes/show', { quiz: req.quiz, errors: [ ] } );
 }

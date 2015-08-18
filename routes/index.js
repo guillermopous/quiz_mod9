@@ -35,6 +35,7 @@ router.put( "/quizes/:quizId(\\d+)", sessionController.loginRequired, quizContro
 router.delete( "/quizes/:quizId(\\d+)", sessionController.loginRequired, quizController.destroy );
 router.get( "/quizes/new", sessionController.loginRequired, quizController.new );
 router.post( "/quizes/create", sessionController.loginRequired, quizController.create );
+router.get( "/quizes/statistics", quizController.statistics );
 
 router.get( "/quizes/:quizId(\\d+)/comments/new", commentController.new );
 router.post( "/quizes/:quizId(\\d+)/comments", commentController.create );
